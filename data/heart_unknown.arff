@@ -1,0 +1,24 @@
+@relation R_data_frame
+
+@attribute Age numeric
+@attribute Sex {F,M}
+@attribute RestingBP numeric
+@attribute Cholesterol numeric
+@attribute FastingBS {FALSE,TRUE}
+@attribute RestingECG {LVH,Normal,ST}
+@attribute MaxHR numeric
+@attribute ExerciseAngina {FALSE,TRUE}
+@attribute Oldpeak numeric
+@attribute ASY {FALSE,TRUE}
+@attribute ATA {FALSE,TRUE}
+@attribute NAP {FALSE,TRUE}
+@attribute TA {FALSE,TRUE}
+@attribute ST_Slope_Flat {FALSE,TRUE}
+@attribute ST_Slope_Down {FALSE,TRUE}
+@attribute ST_Slope_Up {FALSE,TRUE}
+@attribute HeartDisease {FALSE,TRUE}
+
+@data
+40,M,140,289,FALSE,Normal,172,FALSE,0,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,?
+49,F,160,180,FALSE,Normal,156,FALSE,1,FALSE,FALSE,TRUE,FALSE,FALSE,TRUE,FALSE,?
+37,M,130,283,FALSE,ST,98,FALSE,0,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,?
