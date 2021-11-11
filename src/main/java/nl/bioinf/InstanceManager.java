@@ -79,6 +79,13 @@ public class InstanceManager {
     }
 
     /**
+     * Clears the instances
+     */
+    public void clearInstances(){
+        dataRaw.clear();
+    }
+
+    /**
      * @param filetype working file extentions are arff and csv. If other is provided sderr is written
      * @param filepath path to file
      * @param instances instances to be written to file

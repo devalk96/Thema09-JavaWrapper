@@ -30,8 +30,11 @@ public class CLIHandler {
                 "Get instances from file instead of parsing as arguments"));
         options.addOption( new Option("v",
                 "variables", true,
-                "Provide arguments trough commandline in following format (commas as separators and without spaces): " + format));
-        options.addOption(new Option("o", "output", true, "If path is provided, output file is created"));
+                "Provide arguments trough commandline in following format " +
+                        "(commas as separators and without spaces): " + format));
+
+        options.addOption(new Option("o", "output",
+                true, "If path is provided, output file is created"));
         return options;
     }
 
@@ -70,7 +73,6 @@ public class CLIHandler {
         String format = filepath.substring(filepath.lastIndexOf(".") + 1);
         System.out.println("format = " + format);
         this.outputPath = filepath;
-
 
         switch (format) {
             case "arff" -> this.outputFormat = "arff";
