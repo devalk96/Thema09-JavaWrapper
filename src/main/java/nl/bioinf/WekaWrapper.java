@@ -1,83 +1,88 @@
 package nl.bioinf;
 
-import weka.classifiers.trees.J48;
 import weka.classifiers.meta.CostSensitiveClassifier;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class WekaWrapper {
-    private final String modelFile = "src/main/resources/adaboost.model";
+    InstanceManager instances = new InstanceManager();
 
-    public static void main(String[] args) {
-        WekaWrapper runner = new WekaWrapper();
-        runner.start();
-    }
-
-    private void start() {
-        String datafile = "data/heart_cleaned.arff";
-        String unknownFile = "data/heart_unknown.arff";
+    /**
+     * @param unknownInstances Instances who will be classified
+     * @return results of classification
+     */
+    private Instances run(Instances unknownInstances){
         try {
             CostSensitiveClassifier csc = loadClassifier();
-            Instances instances = loadArff(datafile);
-            Instances unknownInstances = loadArff(unknownFile);
-
-//            Instances instances = loadArff(datafile);
-//            printInstances(instances);
-//            J48 j48 = buildClassifier(instances);
-//            saveClassifier(j48);
-//            J48 fromFile = loadClassifier();
-//            Instances unknownInstances = loadArff(unknownFile);
-//            System.out.println("\nunclassified unknownInstances = \n" + unknownInstances);
-            classifyNewInstance(csc, unknownInstances);
+            return classifyNewInstance(csc, unknownInstances);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    private void classifyNewInstance(CostSensitiveClassifier tree, Instances unknownInstances) throws Exception {
-        // create copy
+    /**
+     * @param model Model that will be used to classify
+     * @param unknownInstances unclassified instances as Instances object
+     * @return classified instances as Instances object
+     */
+    private Instances classifyNewInstance(CostSensitiveClassifier model, Instances unknownInstances) throws Exception {
         Instances labeled = new Instances(unknownInstances);
-        // label instances
+
         for (int i = 0; i < unknownInstances.numInstances(); i++) {
-            double clsLabel = tree.classifyInstance(unknownInstances.instance(i));
+            double clsLabel = model.classifyInstance(unknownInstances.instance(i));
             labeled.instance(i).setClassValue(clsLabel);
         }
-        System.out.println("\nNew, labeled = \n" + labeled);
+        return labeled;
     }
 
+    /**
+     * Parses model from file
+     * @return CostSensitiveClassifier object
+     */
     private CostSensitiveClassifier loadClassifier() throws Exception {
         // deserialize model
+        String modelFile = "src/main/resources/adaboost.model";
         return (CostSensitiveClassifier) weka.core.SerializationHelper.read(modelFile);
     }
 
-    private void saveClassifier(J48 j48) throws Exception {
-        //post 3.5.5
-        // serialize model
-        weka.core.SerializationHelper.write(modelFile, j48);
-
-        // serialize model pre 3.5.5
-//        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(modelFile));
-//        oos.writeObject(j48);
-//        oos.flush();
-//        oos.close();
-    }
-
-    private Instances loadArff(String datafile) throws IOException {
-        try {
-            ConverterUtils.DataSource source = new ConverterUtils.DataSource(datafile);
-            Instances data = source.getDataSet();
-            // setting class attribute if the data format does not provide this information
-            // For example, the XRFF format saves the class attribute information as well
-            if (data.classIndex() == -1)
-                data.setClassIndex(data.numAttributes() - 1);
-            return data;
-        } catch (Exception e) {
-            throw new IOException("could not read from file");
+    /**
+     * print results to system out
+     * @param results Instances object
+     */
+    private static void echoResults(Instances results){
+        System.out.println("Results:");
+        if (results.numInstances() == 0){
+            System.out.println("Empty, no input provided");
+        }
+        for (int i = 0; i < results.numInstances(); i++){
+            Instance instance = results.instance(i);
+            boolean result = instance.classValue() != 0 ;
+            System.out.println("Instance: " + i + " has heart disease according to model: " + result);
         }
     }
 
+    public static void main(String[] args) {
+        CLIHandler commandline = new CLIHandler(args);
+        WekaWrapper runner = new WekaWrapper();
+        if (!commandline.variables.isEmpty()){
+            for (LinkedHashMap<String, String> instance: commandline.variables){
+                runner.instances.addInstances(instance);
+        }}
+        if (commandline.cmd.getOptionValue("infile") != null) {
+            runner.instances.addInstancesFromFile(commandline.cmd.getOptionValue("infile"));
+        }
+        Instances res = runner.run(runner.instances.getInstances());
 
-}
+        if (commandline.cmd.getOptionValue("output") != null){
+            runner.instances.writeInstanceToFile(commandline.outputFormat, commandline.outputPath, res);
+        }
+        echoResults(res);
+        }
+
+    }
