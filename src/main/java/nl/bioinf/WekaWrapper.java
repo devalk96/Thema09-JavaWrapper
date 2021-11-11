@@ -3,9 +3,6 @@ package nl.bioinf;
 import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils;
-
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class WekaWrapper {
@@ -46,7 +43,6 @@ public class WekaWrapper {
      * @return CostSensitiveClassifier object
      */
     private CostSensitiveClassifier loadClassifier() throws Exception {
-        // deserialize model
         String modelFile = "src/main/resources/adaboost.model";
         return (CostSensitiveClassifier) weka.core.SerializationHelper.read(modelFile);
     }
