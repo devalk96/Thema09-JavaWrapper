@@ -13,6 +13,7 @@ This makes it possible to classify your own provided instances.
 variable order: *Age,Sex,RestingBP,Cholesterol,FastingBS,RestingECG,MaxHR,ExerciseAngina,
 Oldpeak,ASY,ATA,NAP,TA,ST_Slope_Flat,ST_Slope_Down,ST_Slope_Up*  
 Note: no spaces should be used only seperation with commas
+
 ## Example
         Example argument string:
         -f ./data/heart_unknown.arff -v 22,F,140,120,FALSE,Normal,180,FALSE,0,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE -o ./data/output.arff
@@ -32,5 +33,10 @@ Oldpeak,ASY,ATA,NAP,TA,ST_Slope_Flat,ST_Slope_Down,ST_Slope_Up*
 Creates an instances object and adds to instances.
 A valid example can be found in data/heart_unknown.arff.
 
+## Further info
+data contains 3 example files:   
+**heart_cleaned.arff** Data used to create the model.  
+**heart_unknown.arff** Example which can be used to try the example.   
+**output.arff** Example generated output 
 ## Contact
 Email: **s.j.bouwman@st.hanze.nl**
