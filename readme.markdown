@@ -1,5 +1,6 @@
 # WekaWrapper
-This weka wrapper makes is possible to use the generated model in a CLI. 
+This weka wrapper makes is possible to use the generated model in a CLI enviroment. WekaWrapper can also be 
+sed as an API. 
 This makes it possible to classify your own provided instances.
 
 
