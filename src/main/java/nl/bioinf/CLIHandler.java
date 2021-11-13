@@ -1,13 +1,13 @@
+/*
+ * Copyright (c) 2021 <Sander J. Bouwman>.
+ * Licensed under GPLv3. See gpl.md
+ */
+
+
 package nl.bioinf;
 
 import org.apache.commons.cli.*;
-import weka.core.Instances;
-import weka.core.converters.ConverterUtils;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class CLIHandler {

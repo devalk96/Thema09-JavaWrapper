@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 <Sander J. Bouwman>.
+ * Licensed under GPLv3. See gpl.md
+*/
+
 package nl.bioinf;
 
 import weka.classifiers.meta.CostSensitiveClassifier;

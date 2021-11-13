@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021 <Sander J. Bouwman>.
+ * Licensed under GPLv3. See gpl.md
+ */
+
+
 package nl.bioinf;
 
 import weka.core.Attribute;
@@ -12,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
-import java.util.zip.ZipException;
 
 public class InstanceManager {
     Instances dataRaw;
