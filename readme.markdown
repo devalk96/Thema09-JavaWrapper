@@ -72,6 +72,10 @@ Oldpeak,ASY,ATA,NAP,TA,ST_Slope_Flat,ST_Slope_Down,ST_Slope_Up*
 Creates an instances object and adds to instances.
 A valid example can be found in data/heart_unknown.arff.
 
+### WekaWrapper.run()  
+Will classify all instances currently added to wrapper.instances.  
+Returns instances object containing all predictions. 
+
 ## Further info
 data contains 3 example files:   
 **heart_cleaned.arff** Data used to create the model.  
