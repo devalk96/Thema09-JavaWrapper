@@ -29,3 +29,18 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('uberJar', Jar) {
+    manifest {
+        attributes "Main-Class": "nl.bioinf.WekaWrapper"
+    }
+
+    archiveClassifier = 'uber'
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}

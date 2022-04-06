@@ -35,6 +35,9 @@ public class CLIHandler {
 
         options.addOption(new Option("o", "output",
                 true, "If path is provided, output file is created"));
+
+        options.addOption(new Option("m", "model",
+                true, "path to model that will be used for classification"));
         return options;
     }
 

@@ -17,9 +17,9 @@ public class WekaWrapper {
      * @param unknownInstances Instances who will be classified
      * @return results of classification
      */
-    private Instances run(Instances unknownInstances){
+    private Instances run(Instances unknownInstances, String pathToModel){
         try {
-            CostSensitiveClassifier csc = loadClassifier();
+            CostSensitiveClassifier csc = loadClassifier(pathToModel);
             return classifyNewInstance(csc, unknownInstances);
 
         } catch (Exception e) {
@@ -47,9 +47,8 @@ public class WekaWrapper {
      * Parses model from file
      * @return CostSensitiveClassifier object
      */
-    private CostSensitiveClassifier loadClassifier() throws Exception {
-        String modelFile = "src/main/resources/adaboost.model";
-        return (CostSensitiveClassifier) weka.core.SerializationHelper.read(modelFile);
+    private CostSensitiveClassifier loadClassifier(String pathToModel) throws Exception {
+        return (CostSensitiveClassifier) weka.core.SerializationHelper.read(pathToModel);
     }
 
     /**
@@ -78,7 +77,8 @@ public class WekaWrapper {
         if (commandline.cmd.getOptionValue("infile") != null) {
             runner.instances.addInstancesFromFile(commandline.cmd.getOptionValue("infile"));
         }
-        Instances res = runner.run(runner.instances.getInstances());
+        String modelpath = commandline.cmd.getOptionValue("model");
+        Instances res = runner.run(runner.instances.getInstances(), modelpath);
 
         if (commandline.cmd.getOptionValue("output") != null){
             runner.instances.writeInstanceToFile(commandline.outputFormat, commandline.outputPath, res);
